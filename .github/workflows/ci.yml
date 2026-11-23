@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Resolve the remote package from GitHub + build for the iOS Simulator
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: xcodebuild -version
+      - name: Scenario matches the copy the library's LabStageTests assert
+        run: python3 Scripts/check_scenario_sync.py
+      - name: Resolve HybridInference from GitHub at the exact version in Package.resolved
+        run: >
+          xcodebuild -resolvePackageDependencies
+          -project Demo.xcodeproj -scheme Demo
+          -onlyUsePackageVersionsFromResolvedFile
+      - name: Build the Demo app (warnings as errors on the app target)
+        run: >
+          xcodebuild build
+          -project Demo.xcodeproj
+          -scheme Demo
+          -destination 'generic/platform=iOS Simulator'
+          -onlyUsePackageVersionsFromResolvedFile
+          CODE_SIGNING_ALLOWED=NO

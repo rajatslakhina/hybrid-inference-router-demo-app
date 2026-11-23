@@ -1,0 +1,15 @@
+{
+  "originHash" : "ee7c925bb0a267fa12a727d423027a236663a7c1d32b4c300d884d563c92a16d",
+  "pins" : [
+    {
+      "identity" : "hybrid-inference-router-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rajatslakhina/hybrid-inference-router-kit.git",
+      "state" : {
+        "revision" : "962d2374e622d6e645873b86e33971e323319a61",
+        "version" : "1.2.4"
+      }
+    }
+  ],
+  "version" : 3
+}
